@@ -30,6 +30,14 @@ namespace Innlevering1
         private int characterStopPlacement = 800;
         private int CharacterNum;
         private int lifeCount = 5;
+        private int level = 0;
+        private int runTimeCounter = 0;
+        private int numberOfCharacters = 0;
+        private int nextNumberOfCharacters = 0;
+        private int drawCount = 1;
+        private int nextDrawCount = 1;
+        private float levelSpeed = 1;
+        private float nextLevelSpeed = 1;
 
         private Boolean ifCharacterChoosen = true;
 
@@ -52,7 +60,7 @@ namespace Innlevering1
         {
             mouseBox = new Rectangle(Mouse.GetState().X + (mouseBox.Width / 2), Mouse.GetState().Y + (mouseBox.Height / 2), 20, 20);
             characterBox = new Rectangle((int)CharacterPlacement.X, (int)CharacterPlacement.Y, CharacterBoy.Bounds.Width, CharacterBoy.Bounds.Height);
-            CharacterPlacement.X += 1;
+            CharacterPlacement.X += levelSpeed;
 
             if (mouseBox.Intersects(characterBox) &&
                 Mouse.GetState().LeftButton == ButtonState.Pressed)
@@ -70,12 +78,37 @@ namespace Innlevering1
             }
             if (CharacterPlacement.X == characterStartPlacement)
                 ifCharacterChoosen = true;
-            
+
+            if (runTimeCounter == 300)
+            {
+                runTimeCounter = 0;
+                if (level == 0)
+                    level = 1;
+                else
+                    level = 0;
+            }
+            switch (level)
+            {
+                case 0:
+                    if (nextLevelSpeed == levelSpeed)
+                    {
+                        nextLevelSpeed = levelSpeed + 1;
+                    }
+                    break;
+                case 1:
+                    levelSpeed = nextLevelSpeed;
+                    break;
+                default:
+                    levelSpeed = 1;
+                    break;
+            }
+                
+            runTimeCounter++;
         }
 
-        internal override void Draw()
-        {
 
+        internal void drawRandomCharacter()
+        {
             switch (CharacterNum)
             {
                 case 0:
@@ -97,8 +130,11 @@ namespace Innlevering1
                     spriteBatch.Draw(CharacterBoy, CharacterPlacement, Color.White);
                     break;
             }
-                
+        }
 
+        internal override void Draw()
+        {
+            drawRandomCharacter();
         }
     }
 }

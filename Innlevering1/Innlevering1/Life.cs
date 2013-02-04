@@ -28,7 +28,7 @@ namespace Innlevering1
 
         internal override void Update()
         {
-            
+           // lifeCount = Character.life().get; // Skaff variabelen 'lifeCount' fra character
         }
 
         internal override void Draw()
