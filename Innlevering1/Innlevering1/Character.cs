@@ -11,13 +11,27 @@ namespace Innlevering1
 {
     class Character : GameState
     {
-        Texture2D CharacterBoy;
-        Vector2 CharacterBoyPlacement = new Vector2(20, 350);
-        Texture2D CharacterCatGirl;
-        Texture2D CharacterHornGirl;
-        Texture2D CharacterPinkgirl;
-        Texture2D CharacterPrincessGirl;
+        // Declares Character-textures
+        private Texture2D CharacterBoy;
+        private Texture2D CharacterCatGirl;
+        private Texture2D CharacterHornGirl;
+        private Texture2D CharacterPinkgirl;
+        private Texture2D CharacterPrincessGirl;
 
+        // Declares Character-Placement
+        private Vector2 CharacterPlacement = new Vector2(-100, 350);
+        
+        // Declares a box around the mouse, used to detect mouse-character collition
+        private Rectangle mouseBox;
+        private Rectangle characterBox;
+
+        //
+        private int characterStartPlacement = -100;
+        private int characterStopPlacement = 800;
+        private int CharacterNum;
+        private int lifeCount = 5;
+
+        private Boolean ifCharacterChoosen = true;
 
         public Character(SpriteBatch spriteBatch, ContentManager contentMananger)
             : base(spriteBatch, contentMananger)
@@ -36,20 +50,55 @@ namespace Innlevering1
 
         internal override void Update()
         {
-            CharacterBoyPlacement.X += 1;
-            if (Mouse.GetState().X < Mouse.GetState().X + CharacterBoy.Bounds.Width &&
-                Mouse.GetState().X > CharacterBoyPlacement.X &&
-                Mouse.GetState().Y < Mouse.GetState().Y + CharacterBoy.Bounds.Width &&
-                Mouse.GetState().Y > CharacterBoyPlacement.Y &&
+            mouseBox = new Rectangle(Mouse.GetState().X + (mouseBox.Width / 2), Mouse.GetState().Y + (mouseBox.Height / 2), 20, 20);
+            characterBox = new Rectangle((int)CharacterPlacement.X, (int)CharacterPlacement.Y, CharacterBoy.Bounds.Width, CharacterBoy.Bounds.Height);
+            CharacterPlacement.X += 1;
+
+            if (mouseBox.Intersects(characterBox) &&
                 Mouse.GetState().LeftButton == ButtonState.Pressed)
+                CharacterPlacement.X = characterStartPlacement;
+
+            if (CharacterPlacement.X > characterStopPlacement)
+                CharacterPlacement.X = characterStartPlacement;
+                lifeCount--;
+
+            if (ifCharacterChoosen)
             {
-                CharacterBoyPlacement.X = -100;
+                Random rand = new Random();
+                CharacterNum = rand.Next(0, 5);
+                ifCharacterChoosen = false;
             }
+            if (CharacterPlacement.X == characterStartPlacement)
+                ifCharacterChoosen = true;
+            
         }
 
         internal override void Draw()
         {
-            spriteBatch.Draw(CharacterBoy, CharacterBoyPlacement, Color.White);
+
+            switch (CharacterNum)
+            {
+                case 0:
+                    spriteBatch.Draw(CharacterBoy, CharacterPlacement, Color.White);
+                    break;
+                case 1:
+                    spriteBatch.Draw(CharacterCatGirl, CharacterPlacement, Color.White);
+                    break;
+                case 2:
+                    spriteBatch.Draw(CharacterHornGirl, CharacterPlacement, Color.White);
+                    break;
+                case 3:
+                    spriteBatch.Draw(CharacterPinkgirl, CharacterPlacement, Color.White);
+                    break;
+                case 4:
+                    spriteBatch.Draw(CharacterPrincessGirl, CharacterPlacement, Color.White);
+                    break;
+                default:
+                    spriteBatch.Draw(CharacterBoy, CharacterPlacement, Color.White);
+                    break;
+            }
+                
+
         }
     }
 }

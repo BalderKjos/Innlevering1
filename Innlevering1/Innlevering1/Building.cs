@@ -11,19 +11,19 @@ namespace Innlevering1
 {
 	class Building : GameState
 	{
-        Texture2D RoofNorthWest;
-        Texture2D RoofNorth;
-        Texture2D RoofNorthEast;
-        Texture2D RoofWest;
-        Texture2D RoofEast;
-        Texture2D RoofSouthWest;
-        Texture2D RoofSouthEast;
-        Texture2D RoofSouth;
-        Texture2D BrownBlock;
-        Texture2D WindowTall;
-        Texture2D WallBlockTall;
-        Texture2D DoorTallClosed;
-        Texture2D StoneBlock;
+        private Texture2D RoofNorthWest;
+        private Texture2D RoofNorth;
+        private Texture2D RoofNorthEast;
+        private Texture2D RoofWest;
+        private Texture2D RoofEast;
+        private Texture2D RoofSouthWest;
+        private Texture2D RoofSouthEast;
+        private Texture2D RoofSouth;
+        private Texture2D BrownBlock;
+        private Texture2D WindowTall;
+        private Texture2D WallBlockTall;
+        private Texture2D DoorTallClosed;
+        private Texture2D StoneBlock;
 
         public Building(SpriteBatch spritebatch, ContentManager content)
             : base(spritebatch, content)

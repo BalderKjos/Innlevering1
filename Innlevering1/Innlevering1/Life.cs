@@ -11,8 +11,8 @@ namespace Innlevering1
 {
     class Life : GameState
     {
-        int lifeCount = 5;
-        Texture2D Heart;
+        private Texture2D Heart;
+        private int lifeCount = 5;
 
         public Life(SpriteBatch spriteBatch, ContentManager contentMananger)
             : base(spriteBatch, contentMananger)
@@ -28,7 +28,7 @@ namespace Innlevering1
 
         internal override void Update()
         {
-
+            
         }
 
         internal override void Draw()
